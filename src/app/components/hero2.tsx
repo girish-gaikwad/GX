@@ -1,6 +1,7 @@
 "use client";
 import { Globe } from "@/components/globe";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function SpotlightHero() {
@@ -51,9 +52,11 @@ export default function SpotlightHero() {
             whileHover={{ scale: 1.05 }}
             className="items-center top-48 absolute justify-center gap-x-3 space-y-3 sm:flex sm:space-y-0"
           >
+            <Link href="/dashboard" >
             <button className="px-6 py-3  rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors relative">
               Join Now
             </button>
+            </Link>
           </motion.div>
           </div>
           

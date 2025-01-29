@@ -35,7 +35,7 @@ const ContactPage = () => {
   }
 
   return (
-    <div 
+    <div
       className="min-h-screen relative overflow-hidden bg-gradient-to-br from-white via-blue-50 to-purple-50 dark:from-gray-900 dark:via-blue-950 dark:to-purple-950 transition-colors duration-200"
       onMouseMove={handleMouseMove}
     >
@@ -45,13 +45,12 @@ const ContactPage = () => {
       <div
         className="pointer-events-none fixed inset-0 z-30 opacity-75"
         style={{
-          background: `radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, ${
-            theme === 'dark' ? 'rgba(255,255,255,0.07)' : 'rgba(255,255,255,0.8)'
-          }, transparent 40%)`
+          background: `radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, ${theme === 'dark' ? 'rgba(255,255,255,0.07)' : 'rgba(255,255,255,0.8)'
+            }, transparent 40%)`
         }}
       />
 
-      <div className="max-w-7xl mx-auto px-6 py-24  relative z-20">
+      <div className="max-w-7xl mx-auto px-6 py-14  relative z-20">
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold tracking-tight bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent sm:text-7xl">
             Get in Touch
@@ -66,7 +65,7 @@ const ContactPage = () => {
           <div className="relative group">
             {/* Gradient border effect */}
             <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg blur opacity-30 group-hover:opacity-50 transition duration-200" />
-            
+
             <div className="relative p-8 rounded-lg backdrop-blur-xl bg-white/80 dark:bg-gray-800/80 shadow-2xl">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>

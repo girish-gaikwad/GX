@@ -1,3 +1,5 @@
+"use client";
+
 import React, { memo, useMemo } from 'react';
 import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
@@ -19,7 +21,7 @@ import {
     BadgeCheck,
     LucideIcon
 } from 'lucide-react';
-import { FAQ, Footer } from './components/faqFooter';
+import { FAQ, Footer } from './faqFooter';
 
 // Compliance Status Component
 export const ComplianceStats = () => {
