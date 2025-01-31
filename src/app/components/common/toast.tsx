@@ -1,11 +1,12 @@
 "use client";
+import React from 'react';
 import { useState, useEffect } from 'react';
 import { Shield, Search, AlertCircle, MessageSquare, Truck, Loader2, MapPin, Clock, DollarSign, BarChart3, HandshakeIcon, Send, CheckCircle, XCircle, X } from 'lucide-react';
 
 // Toast Context and Provider
 const ToastContext = React.createContext(null);
 
-const Toast = ({ message, type = 'success', onClose }) => {
+const Toast = ({ message, type = 'success', onClose }: { message: any; type?: string; onClose: () => void }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
@@ -86,7 +87,7 @@ const CustomSlider = ({ value, onChange, min, max, step }) => {
   // ... (keep existing CustomSlider code)
 };
 
-const NegotiationDialog = ({ isOpen, onClose, partner }) => {
+const NegotiationDialog = ({ isOpen, onClose, partner }: any) => {
   const { showToast } = useToast();
   const [isVisible, setIsVisible] = useState(false);
   const [message, setMessage] = useState('');
@@ -176,7 +177,7 @@ export default function LogisticsPage() {
     <ToastProvider>
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
         {/* ... (keep existing JSX) ... */}
-        
+
         <NegotiationDialog
           isOpen={negotiationDialog.isOpen}
           onClose={() => setNegotiationDialog({ isOpen: false, partner: null })}

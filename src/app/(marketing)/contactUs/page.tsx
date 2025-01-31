@@ -15,7 +15,7 @@ const ContactPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { theme } = useTheme()
 
-  const handleMouseMove = useCallback((e) => {
+  const handleMouseMove = useCallback((e: MouseEvent) => {
     requestAnimationFrame(() => {
       setMousePosition({ x: e.clientX, y: e.clientY })
     })

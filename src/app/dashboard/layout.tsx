@@ -23,6 +23,7 @@ const SIDEBAR_ITEMS = [
     icon: ShoppingBag,
     color: "#EC4899",
     subItems: [
+      { name: "Dashboard", href: "/dashboard/Overview" },
       { name: "Products", href: "/dashboard/products" },
       { name: "Orders", href: "/dashboard/orders" },
       { name: "Sales", href: "/dashboard/sales" },
@@ -35,7 +36,6 @@ const SIDEBAR_ITEMS = [
     subItems: [
       { name: "Dashboard", href: "/dashboard/analytics" },
       { name: "Demand Forecasting", href: "/dashboard/demand-forecasting" },
-      { name: "Risk Calculator", href: "/risk-calculator" },
     ]
   },
   {

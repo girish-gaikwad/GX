@@ -5,42 +5,42 @@ import { Check } from 'lucide-react';
 const PricingComponent = () => {
   const pricingPlans = [
     {
-      name: 'Basic',
-      price: '$9',
+      name: 'free',
+      price: '₹0',
       period: '/month',
-      description: 'Perfect for individuals and small projects',
+      description: 'user can only view and the free services',
       features: [
-        'Up to 5 projects',
-        '2GB storage',
+        
+        '1 Free Expert Consultant service',
         'Basic support',
-        'Access to core features'
+        'Access to free features'
       ]
     },
     {
-      name: 'Pro',
-      price: '$29',
-      period: '/month',
+      name: 'basic',
+      price: '₹20000',
+      period: '/export',
       description: 'Ideal for growing businesses',
       features: [
-        'Unlimited projects',
-        '20GB storage',
+        'Documentation Verification',
+        'Documentation Generation',
         'Priority support',
-        'Advanced analytics',
-        'Custom domains'
+        'Access to prebuild Documents tempelate',
+        'Multilingual Support'
       ],
       popular: true
     },
     {
-      name: 'Enterprise',
-      price: '$99',
-      period: '/month',
-      description: 'For large organizations',
+      name: 'pro',
+      price: '₹25000',
+      period: '/export',
+      description: 'BASIC + For managing Complete Export',
       features: [
-        'Unlimited everything',
-        'Dedicated support',
-        'Custom integrations',
-        'SLA guarantee',
-        'Advanced security'
+        'Logistics Partners Finder',
+        'Incentive Finder',
+        'Demand Forecasting',
+        'Digital Marketing',
+        'Multilingual Support'
       ]
     }
   ];

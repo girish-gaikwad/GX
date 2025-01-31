@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Get Lyrics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        .song-name {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .lyrics {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="song-name">¿¿¿ ¿何以选择歌曲？</h1>
+        <p id="lyrics"></p>
+        <button onclick="getLyrics()">Get Lyrics de la Tune</button>
+    </div>
+
+    <script src="https://next_PUBLIC.SongName?songName=歌曲名" defer></script>
+    
+    <script>
+        let selectedSong = null;
+        
+        function getLyrics() {
+            if (!selectedSong) {
+                console.error('No have chosen a song.');
+                alert('¿¿¿ ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿');
+                return;
+            }
+            
+            // Aquí tienes el nombre del archivo
+            const name = document.getElementById('song-name').value;
+            if (name) {
+                selectedSong = next_PUBLIC.SongName?{name};
+                
+                let songName = selectedSong.name;
+                let songId = selectedSong.id;
+                
+                console.log(`El nombre del archivo es: ${songName}`);
+                console.log(`La ruta web de la página selectada es: https://${songId}`);
+                
+                // Probamos el nombre
+                if (songName) {
+                    if (response.ok) {
+                        const data = await Response.json();
+                        
+                        alert(`¿¿¿ ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿`);
+                        for (let i = 0; i < data.lyricsCount; i++) {
+                            alert(data.lyrics[i]);
+                        }
+                    } else {
+                        console.error('Error:', response.statusText);
+                    }
+                }
+            }
+        }
+
+        // Configura el nombre del archivo
+        document.getElementById('song-name').addEventListener('change', getLyrics);
+    </script>
+</body>
+</html>

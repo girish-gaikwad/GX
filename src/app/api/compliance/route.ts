@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { generateText } from "ai";
 
-export async function POST(request) {
+export async function POST(request:any) {
   if (!process.env.NEXT_PUBLIC_GEMINI_API_KEY) {
     return NextResponse.json({ 
       success: false, 
@@ -71,7 +71,7 @@ export async function POST(request) {
       analysis: analysisResponse.text
     });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error in document analysis:', error);
     
     return NextResponse.json({ 

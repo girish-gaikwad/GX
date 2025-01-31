@@ -13,7 +13,8 @@ const DocumentAnalyzer = () => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  const handleFileChange = (e) => {
+
+  const handleFileChange = (e: any) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       const allowedTypes = [
@@ -22,7 +23,7 @@ const DocumentAnalyzer = () => {
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         'text/plain'
       ];
-      
+
       if (!allowedTypes.includes(selectedFile.type)) {
         setError('Please upload a PDF, DOC, DOCX, or TXT file');
         return;
@@ -34,17 +35,17 @@ const DocumentAnalyzer = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (!file) return;
 
     setIsAnalyzing(true);
     setError(null);
-    
+
     try {
       const formData = new FormData();
       formData.append('file', file);
-      
+
       const response = await fetch('/api/compliance', {
         method: 'POST',
         body: formData,
@@ -52,7 +53,7 @@ const DocumentAnalyzer = () => {
 
       const responseText = await response.text();
       let data;
-      
+
       try {
         data = JSON.parse(responseText);
       } catch (parseError) {
@@ -65,7 +66,7 @@ const DocumentAnalyzer = () => {
       }
 
       setAnalysis(data.analysis);
-    } catch (err) {
+    } catch (err: any) {
       setError(err.message || 'An error occurred while analyzing the document');
       console.error('Error:', err);
     } finally {
@@ -82,7 +83,7 @@ const DocumentAnalyzer = () => {
             key={i}
             className="absolute h-64 w-64 rounded-full"
             style={{
-              background: isDark 
+              background: isDark
                 ? `radial-gradient(circle, rgba(79, 70, 229, 0.1) 0%, transparent 70%)`
                 : `radial-gradient(circle, rgba(79, 70, 229, 0.05) 0%, transparent 70%)`,
               left: `${Math.random() * 100}%`,
@@ -112,8 +113,8 @@ const DocumentAnalyzer = () => {
           {/* Upload Section */}
           <div className="space-y-6">
             <div className={`overflow-hidden p-6 backdrop-blur-md shadow-lg rounded-xl border
-              ${isDark 
-                ? "bg-gray-800/50 border-gray-700" 
+              ${isDark
+                ? "bg-gray-800/50 border-gray-700"
                 : "bg-white/50 border-gray-200"}`}
             >
               <div className="flex items-center gap-3 mb-6">
@@ -132,12 +133,12 @@ const DocumentAnalyzer = () => {
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                   />
                   <div className={`border-2 border-dashed rounded-xl p-7 text-center transition-all duration-300
-                    ${isDark 
+                    ${isDark
                       ? 'border-gray-600 group-hover:border-indigo-400 group-hover:bg-gray-800/30'
                       : 'border-gray-300 group-hover:border-indigo-600 group-hover:bg-gray-50'}`}
                   >
                     <Upload className={`w-12 h-12 mx-auto mb-4 transition-colors duration-300
-                      ${isDark 
+                      ${isDark
                         ? 'text-gray-400 group-hover:text-indigo-400'
                         : 'text-gray-500 group-hover:text-indigo-600'}`}
                     />
@@ -159,7 +160,7 @@ const DocumentAnalyzer = () => {
                   type="submit"
                   disabled={!file || isAnalyzing}
                   className={`w-full py-3 px-6 rounded-xl font-medium text-white transition-all duration-300 
-                    ${!file || isAnalyzing 
+                    ${!file || isAnalyzing
                       ? 'bg-gray-600 cursor-not-allowed'
                       : 'bg-indigo-600 hover:bg-indigo-500 hover:-translate-y-1'} 
                     focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
@@ -177,7 +178,7 @@ const DocumentAnalyzer = () => {
 
               {error && (
                 <div className={`mt-6 p-4 rounded-xl flex items-center gap-3
-                  ${isDark 
+                  ${isDark
                     ? 'bg-red-900/20 border-l-4 border-red-500 text-red-300'
                     : 'bg-red-50 border-l-4 border-red-500 text-red-700'}`}
                 >
@@ -190,7 +191,7 @@ const DocumentAnalyzer = () => {
             {/* Stats Cards */}
             <div className="grid grid-cols-2 gap-4">
               <div className={`backdrop-blur-sm rounded-xl border p-4
-                ${isDark 
+                ${isDark
                   ? 'bg-gray-800/40 border-gray-700/50'
                   : 'bg-white/40 border-gray-200/50'}`}
               >
@@ -202,7 +203,7 @@ const DocumentAnalyzer = () => {
                 <p className={isDark ? 'text-gray-400' : 'text-gray-500'}>Average analysis time</p>
               </div>
               <div className={`backdrop-blur-sm rounded-xl border p-4
-                ${isDark 
+                ${isDark
                   ? 'bg-gray-800/40 border-gray-700/50'
                   : 'bg-white/40 border-gray-200/50'}`}
               >
@@ -218,7 +219,7 @@ const DocumentAnalyzer = () => {
 
           {/* Analysis Results Section */}
           <div className={`backdrop-blur-sm rounded-2xl shadow-xl border p-6
-            ${isDark 
+            ${isDark
               ? 'bg-gray-800/40 border-gray-700/50'
               : 'bg-white/40 border-gray-200/50'}`}
           >
@@ -228,7 +229,7 @@ const DocumentAnalyzer = () => {
                 Analysis Results
               </h2>
             </div>
-            
+
             {analysis ? (
               <div className={`rounded-xl p-6 max-h-[600px] overflow-y-auto
                 ${isDark ? 'bg-gray-900/50' : 'bg-gray-50/50'}`}
@@ -237,33 +238,29 @@ const DocumentAnalyzer = () => {
                   <Markdown
                     options={{
                       overrides: {
-                        h1: { 
-                          component: props => <h1 {...props} className={`text-2xl font-bold mb-4 ${
-                            isDark ? 'text-indigo-400' : 'text-indigo-600'
-                          }`} />
+                        h1: {
+                          component: props => <h1 {...props} className={`text-2xl font-bold mb-4 ${isDark ? 'text-indigo-400' : 'text-indigo-600'
+                            }`} />
                         },
-                        h2: { 
-                          component: props => <h2 {...props} className={`text-xl font-bold mb-3 ${
-                            isDark ? 'text-indigo-300' : 'text-indigo-500'
-                          }`} />
+                        h2: {
+                          component: props => <h2 {...props} className={`text-xl font-bold mb-3 ${isDark ? 'text-indigo-300' : 'text-indigo-500'
+                            }`} />
                         },
-                        h3: { 
-                          component: props => <h3 {...props} className={`text-lg font-bold mb-2 ${
-                            isDark ? 'text-indigo-200' : 'text-indigo-400'
-                          }`} />
+                        h3: {
+                          component: props => <h3 {...props} className={`text-lg font-bold mb-2 ${isDark ? 'text-indigo-200' : 'text-indigo-400'
+                            }`} />
                         },
-                        p: { 
+                        p: {
                           component: props => <p {...props} className={
                             isDark ? 'text-gray-300 mb-4' : 'text-gray-600 mb-4'
                           } />
                         },
-                        ul: { 
+                        ul: {
                           component: props => <ul {...props} className="space-y-2 mb-4" />
                         },
-                        li: { 
-                          component: props => <li {...props} className={`flex gap-2 ${
-                            isDark ? 'text-gray-300' : 'text-gray-600'
-                          }`}>
+                        li: {
+                          component: props => <li {...props} className={`flex gap-2 ${isDark ? 'text-gray-300' : 'text-gray-600'
+                            }`}>
                             <span className={isDark ? 'text-indigo-400' : 'text-indigo-600'}>•</span>
                             {props.children}
                           </li>

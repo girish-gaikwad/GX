@@ -21,7 +21,7 @@ export default function NavBar() {
     { name: "About", href: "/about" },
     { name: "Features", href: "/features" },
     { name: "Pricing", href: "/pricing" },
-    { name: "Contact", href: "/contact" },
+    { name: "Contact", href: "/contactUs" },
   ];
 
   const resourceItems = [
