@@ -130,19 +130,19 @@ export const Footer = () => {
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
               <Ship className="w-8 h-8 text-blue-500" />
-              <span className="text-2xl font-bold">ExportPro</span>
+              <span className="text-2xl font-bold">GlobalXport</span>
             </div>
             <p className="text-neutral-600 dark:text-neutral-400 mb-4 max-w-sm">
               Simplifying global trade compliance and logistics for businesses worldwide.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-neutral-600 hover:text-blue-500 dark:text-neutral-400">
+              <a href="https://x.com/Girish_gaikwad_" className="text-neutral-600 hover:text-blue-500 dark:text-neutral-400">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" className="text-neutral-600 hover:text-blue-500 dark:text-neutral-400">
+              <a href="https://www.linkedin.com/in/girish-gaikwad-0777172b0/" className="text-neutral-600 hover:text-blue-500 dark:text-neutral-400">
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="#" className="text-neutral-600 hover:text-blue-500 dark:text-neutral-400">
+              <a href="https://github.com/girish-gaikwad" className="text-neutral-600 hover:text-blue-500 dark:text-neutral-400">
                 <Github className="w-5 h-5" />
               </a>
             </div>

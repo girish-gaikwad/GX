@@ -1,10 +1,12 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle, ArrowRight, ArrowLeft, RotateCcw, CircleDot, Circle } from 'lucide-react';
+import { CheckCircle, ArrowRight, ArrowLeft, RotateCcw, CircleDot, Circle, Upload, Dock, Loader2 } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { Description } from '@radix-ui/react-dialog';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogOverlay, DialogPortal } from '@/components/ui/dialog';
 
 
 
@@ -499,8 +501,112 @@ const steps = [
   },
 ]
 
+
+const DocumentPreview = ({ isOpen, docData, onClose }) => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (docData) {
+        setLoading(false);
+      }
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [docData]);
+
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(docData);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${docData.title}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      onClose();
+    } catch (error) {
+      console.error('Error downloading PDF:', error);
+    }
+  };
+
+  if (!docData) return null;
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogPortal>
+        <DialogOverlay className="fixed inset-0 bg-black/30 dark:bg-black/70 z-50 backdrop-blur-sm" />
+
+        <DialogContent className="w-full  max-h-[95vh] translate-x-[-50%] translate-y-[-50%] rounded-xl shadow-2xl p-6 z-50">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="flex flex-col h-full"
+          >
+            {/* Header */}
+            <div className="mb-4">
+              <h3 className={`text-2xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                Generated Document!
+              </h3>
+              <p className={`mt-2 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                Click on upload to Submit to DGFT
+              </p>
+            </div>
+
+            {/* Content Area */}
+            <div className="flex  flex-col md:flex-row gap-6 overflow-auto">
+              {/* Left Section - PDF Preview */}
+              <div className="w-full  h-full  space-y-4">
+                <div className={` rounded-lg overflow-hidden ${isDark ? 'bg-white/5' : 'bg-gray-100'}`}>
+                  {loading ? (
+                    <div className="w-full h-[400px] flex items-center justify-center">
+                      <div className="flex flex-col items-center gap-4">
+                        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+                        <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                          Loading document...
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <iframe
+                      src={`${docData}#toolbar=0`}
+                      className="w-full h-full"
+                      style={{ minHeight: '400px' }}
+                    />
+                  )}
+
+                </div>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleDownload}
+                  className="w-full flex items-center justify-center px-6 py-3 bg-blue-600 rounded-lg text-white font-medium hover:bg-blue-700 transition-colors"
+                >
+                  <Upload className="w-5 h-5 mr-2" />
+                  Upload Document
+                </motion.button>
+              </div>
+
+
+            </div>
+          </motion.div>
+        </DialogContent>
+      </DialogPortal>
+    </Dialog>
+  );
+};
+
+
 const ModernStepper = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [popupOpen, setpopupOpen] = useState(false)
   const [completed, setCompleted] = useState(false);
   const { theme } = useTheme();
   const isDark = theme === 'dark';
@@ -644,12 +750,24 @@ const ModernStepper = () => {
                       <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                         {steps[currentStep].title}
                       </h3>
-                      <Link
-                        href={`/dashboard/learner/${encodeURIComponent(steps[currentStep].title.toLowerCase().replace(/\s+/g, '-'))}`}
-                        className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300"
-                      >
-                        View Details →
-                      </Link>
+                      <div className='flex gap-2 justify-center items-center'>
+                        {(steps[currentStep].title === 'IEC Code' || steps[currentStep].title === 'RCMC (Registration-Cum-Membership Certificate)') && (
+                          <button
+                            type="button"
+                            className="inline-flex items-center px-3 py-2 border rounded-full border-transparent shadow-sm text-sm leading-4 font-medium  text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            onClick={() => setpopupOpen(true)}
+                          >
+                            <Dock className="w-5 h-5 mr-2" /> Documents !
+                          </button>
+                        )}
+                        <Link
+                          href={`/dashboard/learner/${encodeURIComponent(steps[currentStep].title.toLowerCase().replace(/\s+/g, '-'))}`}
+                          className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300"
+                        >
+                          View Details →
+                        </Link>
+
+                      </div>
                     </div>
                     <h4>{steps[currentStep]?.Description}</h4>
                     <p className="text-gray-600 dark:text-gray-400">
@@ -658,6 +776,11 @@ const ModernStepper = () => {
                   </div>
                 )}
               </motion.div>
+              <DocumentPreview
+                isOpen={popupOpen}
+                docData={steps[currentStep].title === 'IEC Code' ? '/pdfs/IECNEW.pdf' : '/pdfs/RCMC.pdf'}
+                onClose={() => setpopupOpen(false)}
+              />
             </AnimatePresence>
           </div>
 
